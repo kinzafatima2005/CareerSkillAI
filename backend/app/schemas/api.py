@@ -54,6 +54,13 @@ class SkillGapResponse(BaseModel):
     optional_gaps: List[str]
 
 
+class LearningResource(BaseModel):
+    platform: str
+    title: str
+    url: str
+    type: str
+
+
 class RoadmapStage(BaseModel):
     stage: int
     skill: str
@@ -61,6 +68,7 @@ class RoadmapStage(BaseModel):
     status: str  # "Already Completed" or "Learn Next"
     priority: str  # "High Priority", "Medium Priority", "Optional"
     project_recommendation: Optional[str] = None
+    learning_resources: List[LearningResource] = Field(default_factory=list)
 
 
 class RoadmapRequest(BaseModel):

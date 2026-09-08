@@ -45,6 +45,13 @@ export interface SkillGapResponse {
   optional_gaps: string[];
 }
 
+export interface LearningResource {
+  platform: string;
+  title: string;
+  url: string;
+  type: string;
+}
+
 export interface RoadmapStage {
   stage: number;
   skill: string;
@@ -52,6 +59,7 @@ export interface RoadmapStage {
   status: 'Already Completed' | 'Learn Next';
   priority: 'High Priority' | 'Medium Priority' | 'Optional';
   project_recommendation?: string;
+  learning_resources?: LearningResource[];
 }
 
 export interface RoadmapResponse {

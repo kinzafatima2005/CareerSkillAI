@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Manrope', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
+      },
       colors: {
         brand: {
           50: '#f0f6ff',

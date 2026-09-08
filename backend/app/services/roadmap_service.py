@@ -80,6 +80,9 @@ def compute_skill_gap(df: pd.DataFrame, target_role: str, user_skills: List[str]
     }
 
 
+from backend.app.services.learning_resources import get_learning_resources_for_skill
+
+
 def generate_personalized_roadmap(df: pd.DataFrame, target_role: str, user_skills: List[str]) -> Dict[str, Any]:
     """
     Generates a stage-by-stage learning roadmap respecting prerequisites and existing user skills.
@@ -118,7 +121,8 @@ def generate_personalized_roadmap(df: pd.DataFrame, target_role: str, user_skill
                 "category": get_skill_category(skill_name),
                 "status": "Already Completed" if is_completed else "Learn Next",
                 "priority": prio,
-                "project_recommendation": PROJECT_RECOMMENDATIONS.get(skill_name, f"Build a hands-on project using {skill_name}")
+                "project_recommendation": PROJECT_RECOMMENDATIONS.get(skill_name, f"Build a hands-on project using {skill_name}"),
+                "learning_resources": get_learning_resources_for_skill(skill_name)
             })
             stage_idx += 1
             del role_skills_map[skill_name]
@@ -137,7 +141,8 @@ def generate_personalized_roadmap(df: pd.DataFrame, target_role: str, user_skill
             "category": get_skill_category(skill_name),
             "status": "Already Completed" if is_completed else "Learn Next",
             "priority": prio,
-            "project_recommendation": PROJECT_RECOMMENDATIONS.get(skill_name, f"Build a project demonstrating {skill_name}")
+            "project_recommendation": PROJECT_RECOMMENDATIONS.get(skill_name, f"Build a project demonstrating {skill_name}"),
+            "learning_resources": get_learning_resources_for_skill(skill_name)
         })
         stage_idx += 1
 

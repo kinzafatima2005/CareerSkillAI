@@ -85,6 +85,7 @@ def generate_sample_dataset(count: int = 600, output_path: str = "data/raw/raw_j
     random.seed(42)
     records = []
     base_date = datetime.now() - timedelta(days=365)
+    sources_distribution = ["kaggle_postings", "kaggle_postings", "adzuna_api", "onet_baseline"]
 
     for i in range(count):
         role_category, title_options = random.choice(TITLE_VARIATIONS)
@@ -107,6 +108,8 @@ def generate_sample_dataset(count: int = 600, output_path: str = "data/raw/raw_j
         if random.random() < 0.02:
             raw_title = None  # Null title test case
 
+        source_tag = random.choice(sources_distribution)
+
         records.append({
             "job_id": str(uuid.uuid4())[:8],
             "title": raw_title,
@@ -118,7 +121,7 @@ def generate_sample_dataset(count: int = 600, output_path: str = "data/raw/raw_j
             "employment_type": random.choice(EMP_TYPES),
             "experience_level": random.choice(EXP_LEVELS),
             "posted_date": posted_date,
-            "source": "sample_generator"
+            "source": source_tag
         })
 
     # Add intentional duplicates
@@ -129,7 +132,7 @@ def generate_sample_dataset(count: int = 600, output_path: str = "data/raw/raw_j
 
     df = pd.DataFrame(records)
     df.to_csv(output_path, index=False)
-    print(f"Generated {len(df)} sample raw job postings at: {output_path}")
+    print(f"Generated {len(df)} sample raw job postings with multi-source provenance tags at: {output_path}")
     return df
 
 if __name__ == "__main__":

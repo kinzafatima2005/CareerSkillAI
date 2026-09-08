@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Map, Download, CheckCircle, ArrowRight, Layers, Award, Sparkles, BookOpen } from 'lucide-react';
+import { Map, Download, CheckCircle, ArrowRight, Layers, Award, Sparkles, BookOpen, GraduationCap, ExternalLink } from 'lucide-react';
 import { fetchRoles, fetchRoadmap } from '../services/api';
-import { RoleSummary, RoadmapResponse, RoadmapStage } from '../types';
+import { RoleSummary, RoadmapResponse, RoadmapStage, LearningResource } from '../types';
 
 export const RoadmapPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -164,6 +164,39 @@ export const RoadmapPage: React.FC = () => {
                           <BookOpen className="w-4 h-4" /> Recommended Project Blueprint
                         </div>
                         <p className="text-slate-300 font-semibold">{stage.project_recommendation}</p>
+                      </div>
+                    )}
+
+                    {/* Learning Platform Resources (Coursera, Udemy, edX, Docs) */}
+                    {stage.learning_resources && stage.learning_resources.length > 0 && (
+                      <div className="space-y-2 pt-1">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400">
+                          <GraduationCap className="w-4 h-4" /> Top Curated Courses & Learning Resources
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {stage.learning_resources.map((res: LearningResource, idx: number) => (
+                            <a
+                              key={idx}
+                              href={res.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/40 transition-all flex items-start justify-between gap-2 group"
+                            >
+                              <div className="space-y-1 overflow-hidden">
+                                <div className="flex items-center gap-2">
+                                  <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 text-[10px] font-bold border border-indigo-500/20 shrink-0">
+                                    {res.platform}
+                                  </span>
+                                  <span className="text-[10px] text-slate-400 font-medium truncate">{res.type}</span>
+                                </div>
+                                <p className="text-xs text-slate-200 font-medium line-clamp-1 group-hover:text-indigo-300 transition-colors">
+                                  {res.title}
+                                </p>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 shrink-0 mt-1 transition-colors" />
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     )}
 

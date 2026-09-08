@@ -18,23 +18,42 @@ export const AboutPage: React.FC = () => {
 
       <div className="space-y-6">
         
-        {/* SECTION 1: DATASET & CLEANING */}
+        {/* SECTION 1: DATASET & MULTI-SOURCE PIPELINE */}
         <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
           <div className="flex items-center gap-3 text-blue-400 border-b border-slate-800 pb-3">
             <Database className="w-5 h-5" />
-            <h2 className="text-lg font-bold text-white">1. Dataset Sourcing & Cleaning Pipeline</h2>
+            <h2 className="text-lg font-bold text-white">1. Multi-Source Architecture & Data Pipeline</h2>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">
-            Our dataset is compiled from real-world job posting records (including Kaggle LinkedIn datasets and validation sources). Postings undergo automated missing value filtering (dropping empty descriptions), text sanitization (stripping HTML boilerplate), and deduplication using <code className="text-blue-300 font-mono">MD5(cleaned_description)</code> text hashing.
+            CareerSkill AI combines four complementary data sources into a unified intelligence & roadmap engine:
           </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span className="font-bold text-blue-400 block">1. O*NET Standard Taxonomy</span>
+              <p className="text-slate-400 text-[11px]">Establishes canonical occupation titles and baseline foundational skills (SOC codes).</p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span className="font-bold text-indigo-400 block">2. Kaggle Job Datasets</span>
+              <p className="text-slate-400 text-[11px]">Bulk historical postings for deep NLP skill co-occurrence and salary distribution modeling.</p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span className="font-bold text-purple-400 block">3. Real-Time Job APIs</span>
+              <p className="text-slate-400 text-[11px]">Live Adzuna & JSearch fetchers providing up-to-the-minute hiring demand momentum.</p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span className="font-bold text-emerald-400 block">4. Learning Platform Integrations</span>
+              <p className="text-slate-400 text-[11px]">Curated courses and certifications from Coursera, Udemy, FreeCodeCamp, and Official Docs.</p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center space-y-1">
-              <span className="text-2xl font-extrabold text-white block">568</span>
-              <span className="text-[11px] text-slate-400 font-semibold">Clean Jobs Analyzed</span>
+              <span className="text-2xl font-extrabold text-white block">4</span>
+              <span className="text-[11px] text-slate-400 font-semibold">Data Sources Integrated</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center space-y-1">
-              <span className="text-2xl font-extrabold text-white block">10</span>
-              <span className="text-[11px] text-slate-400 font-semibold">Hiring Companies</span>
+              <span className="text-2xl font-extrabold text-white block">568+</span>
+              <span className="text-[11px] text-slate-400 font-semibold">Clean Jobs Analyzed</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center space-y-1">
               <span className="text-2xl font-extrabold text-white block">95.8%</span>
