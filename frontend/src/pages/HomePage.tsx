@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Briefcase, TrendingUp, CheckCircle, Database, Award, ArrowRight, Layers, Cpu, Zap, Activity } from 'lucide-react';
+import { 
+  Search, Briefcase, TrendingUp, CheckCircle2, Database, Award, ArrowRight, 
+  Layers, Cpu, Target, BookOpen, Sparkles, ChevronRight, GraduationCap, Code2,
+  Activity, Check, BarChart2, ShieldCheck, Compass
+} from 'lucide-react';
 import { fetchRoles } from '../services/api';
 import { RoleSummary } from '../types';
 
@@ -43,164 +47,333 @@ export const HomePage: React.FC = () => {
     navigate(`/role/${slug}`);
   };
 
+  // Mock Student Skills & Progress Data
+  const sampleSkillProgress = [
+    { name: 'Python', percentage: 90, level: 'Advanced', color: 'bg-blue-600' },
+    { name: 'SQL & Databases', percentage: 75, level: 'Intermediate', color: 'bg-emerald-600' },
+    { name: 'Machine Learning', percentage: 60, level: 'Intermediate', color: 'bg-purple-600' },
+    { name: 'Deep Learning', percentage: 45, level: 'Beginner', color: 'bg-indigo-600' },
+  ];
+
+  const achievements = [
+    { title: 'SQL Explorer', desc: 'Queries & Schemas', icon: Database, color: 'text-emerald-700 bg-emerald-100 border-emerald-200' },
+    { title: 'Python Beginner', desc: 'Data Structures', icon: Code2, color: 'text-blue-700 bg-blue-100 border-blue-200' },
+    { title: 'ML Ready', desc: 'Model Evaluation', icon: Cpu, color: 'text-purple-700 bg-purple-100 border-purple-200' },
+    { title: 'Pipeline Architect', desc: 'ETL Pipelines', icon: Layers, color: 'text-indigo-700 bg-indigo-100 border-indigo-200' },
+  ];
+
   return (
-    <div className="space-y-16 pb-16">
+    <div className="space-y-8 pb-16 pt-6">
       
-      {/* HERO SECTION */}
-      <section className="pt-12 pb-14 text-center border-b border-slate-800/80 bg-gradient-to-b from-[#0f172a]/60 to-transparent">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6">
-          
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-bold text-blue-400">
-            <Activity className="w-3.5 h-3.5" />
-            <span>Empirical Job Market Skill Intelligence Engine</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            Understand What Employers <span className="text-blue-500">Genuinely Demand</span>.
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Quantify technical skill demand across {roles.length > 0 ? roles.length : 20} canonical roles, measure personal skill-gap alignment %, and generate stage-by-stage learning roadmaps.
-          </p>
-
-          {/* Search Box */}
-          <div className="max-w-xl mx-auto relative text-left" ref={dropdownRef}>
-            <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-2.5">
-              <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search role (e.g. AI Engineer, MLOps, Cybersecurity)..."
-                  value={searchRole}
-                  onChange={(e) => {
-                    setSearchRole(e.target.value);
-                    setShowDropdown(true);
-                  }}
-                  onFocus={() => setShowDropdown(true)}
-                  className="w-full pl-10 pr-4 py-3 prof-input rounded-xl text-slate-100 placeholder-slate-500 text-xs font-medium focus:outline-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-3 prof-button-primary rounded-xl text-xs font-bold flex items-center justify-center gap-2 shrink-0"
-              >
-                <span>Analyze Role</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-
-            {/* Autocomplete Dropdown */}
-            {showDropdown && filteredRoles.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 prof-panel rounded-xl border border-slate-700 p-2 shadow-xl z-50 max-h-60 overflow-y-auto">
-                <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800">
-                  Target Role Matches ({filteredRoles.length})
-                </div>
-                {filteredRoles.map((role) => (
-                  <button
-                    key={role.normalized_key}
-                    onClick={() => handleSelectRole(role.normalized_key)}
-                    className="w-full px-3 py-2 rounded-lg hover:bg-blue-600/20 text-slate-200 hover:text-white flex items-center justify-between text-xs font-semibold transition-colors"
-                  >
-                    <span>{role.name}</span>
-                    <span className="text-[11px] text-slate-400 font-mono">{role.job_count} jobs</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Quick Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400 pt-1">
-            <span className="font-semibold text-slate-500">Popular Searches:</span>
-            {['AI Engineer', 'MLOps Engineer', 'Cybersecurity Engineer', 'Data Scientist', 'Software Engineer'].map((role) => (
-              <button
-                key={role}
-                onClick={() => handleSelectRole(role.toLowerCase().replace(/\s+/g, '-'))}
-                className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-slate-800"
-              >
-                {role}
-              </button>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* METRICS BANNER */}
+      {/* SECTION 1: HERO BLUE BANNER & PROFILE TRACKER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 prof-panel rounded-2xl border border-slate-800">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          <div className="text-center space-y-1 border-r border-slate-800 last:border-0 p-2">
-            <div className="text-2xl sm:text-3xl font-extrabold text-blue-400">568+</div>
-            <div className="text-xs text-slate-400 font-semibold">Real Job Postings Analyzed</div>
+          {/* WELCOME HERO BLUE BANNER */}
+          <div className="lg:col-span-2 rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20">
+            
+            {/* Background Graphic Accents */}
+            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12" />
+            </div>
+            
+            <div className="space-y-4 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-xs font-semibold text-white backdrop-blur-xs">
+                <GraduationCap className="w-4 h-4" />
+                <span>Student Career Readiness Hub</span>
+              </div>
+
+              <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight text-white">
+                Welcome Back, Career Explorer
+              </h1>
+
+              <p className="text-sm text-white/90 max-w-xl leading-relaxed">
+                Your profile alignment is <strong className="text-white underline decoration-white/40">82% complete</strong> for target role <strong className="text-white">Data Scientist</strong>. Complete priority skills to unlock market readiness.
+              </p>
+            </div>
+
+            {/* Role Search Bar inside Hero */}
+            <div className="pt-6 relative z-10 max-w-xl" ref={dropdownRef}>
+              <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#738598]" />
+                  <input
+                    type="text"
+                    placeholder="Search target role (e.g. AI Engineer, Data Scientist, MLOps)..."
+                    value={searchRole}
+                    onChange={(e) => {
+                      setSearchRole(e.target.value);
+                      setShowDropdown(true);
+                    }}
+                    onFocus={() => setShowDropdown(true)}
+                    className="w-full pl-10 pr-4 py-3 bg-white rounded-full text-[#1A2D42] placeholder-[#738598] text-xs font-medium focus:outline-none shadow-card border border-[#DFE6ED]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-[#0084E2] hover:bg-[#0E73B9] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 shrink-0 shadow-card transition-colors"
+                >
+                  <span>Analyze Role</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+
+              {/* Autocomplete Dropdown */}
+              {showDropdown && filteredRoles.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white rounded-2xl border border-[#DFE6ED] p-2 shadow-2xl z-50 max-h-60 overflow-y-auto text-[#1A2D42]">
+                  <div className="px-3 py-1 text-[10px] font-bold text-[#738598] uppercase tracking-wider border-b border-[#DFE6ED]">
+                    Target Role Matches ({filteredRoles.length})
+                  </div>
+                  {filteredRoles.map((role) => (
+                    <button
+                      key={role.normalized_key}
+                      onClick={() => handleSelectRole(role.normalized_key)}
+                      className="w-full px-3 py-2 rounded-xl hover:bg-[#EAF3FA] text-[#1A2D42] hover:text-[#0E73B9] flex items-center justify-between text-xs font-semibold transition-colors"
+                    >
+                      <span>{role.name}</span>
+                      <span className="text-[11px] text-[#738598] font-mono">{role.job_count} jobs</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
 
-          <div className="text-center space-y-1 border-r border-slate-800 last:border-0 p-2">
-            <div className="text-2xl sm:text-3xl font-extrabold text-indigo-400">70</div>
-            <div className="text-xs text-slate-400 font-semibold">Canonical Tech Skills</div>
-          </div>
+          {/* PROFILE COMPLETION TRACKER CARD */}
+          <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card flex flex-col justify-between text-center space-y-4">
+            <div>
+              <h3 className="text-xs font-bold text-[#738598] uppercase tracking-wider font-heading flex items-center justify-center gap-1.5">
+                <Activity className="w-4 h-4 text-[#EE6C4D]" />
+                <span>Profile Completion Tracker</span>
+              </h3>
+              <p className="text-xs text-[#738598] mt-0.5 font-medium">Target Role: Data Scientist</p>
+            </div>
 
-          <div className="text-center space-y-1 border-r border-slate-800 last:border-0 p-2">
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">95.8%</div>
-            <div className="text-xs text-slate-400 font-semibold">NLP Normalization Accuracy</div>
-          </div>
+            {/* Circular Progress Ring */}
+            <div className="relative w-32 h-32 mx-auto flex items-center justify-center py-2">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  className="text-[#EAF3FA]"
+                  strokeWidth="3.8"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  className="text-[#0E73B9]"
+                  strokeDasharray="82, 100"
+                  strokeWidth="3.8"
+                  strokeLinecap="round"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+              <div className="absolute text-center">
+                <span className="text-3xl font-extrabold text-[#1A2D42] font-heading">82%</span>
+                <span className="block text-[10px] text-[#738598] font-semibold uppercase tracking-wider">Match</span>
+              </div>
+            </div>
 
-          <div className="text-center space-y-1 p-2">
-            <div className="text-2xl sm:text-3xl font-extrabold text-cyan-400">20 Roles</div>
-            <div className="text-xs text-slate-400 font-semibold">Canonical Technical Categories</div>
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#18B29C]/10 text-[#18B29C] border border-[#18B29C]/20">
+                <Check className="w-3.5 h-3.5" />
+                <span>High Market Alignment</span>
+              </span>
+              <p className="text-[11px] text-[#738598]">7 of 9 core skills verified</p>
+            </div>
+
+            <Link
+              to="/skill-gap"
+              className="w-full py-2.5 rounded-full bg-[#EAF3FA] hover:bg-[#DFE6ED] text-[#0E73B9] text-xs font-bold text-center block border border-[#DFE6ED] transition-colors"
+            >
+              Run Skill Gap Analysis
+            </Link>
           </div>
 
         </div>
       </section>
 
-      {/* FEATURED ROLES DIRECTORY GRID */}
+      {/* SECTION 2: RECOMMENDED NEXT STEPS (Secondary Action Chips) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-4">
+          <h3 className="text-xs font-bold text-[#1A2D42] uppercase tracking-wider font-heading flex items-center gap-2">
+            <Compass className="w-4 h-4 text-[#0E73B9]" />
+            <span>Recommended Next Steps</span>
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <Link
+              to="/skill-gap"
+              className="px-4 py-3 rounded-full border border-[#DFE6ED] hover:border-[#0084E2] bg-white hover:bg-[#EAF3FA] text-[#1A2D42] text-xs font-semibold flex items-center justify-between transition-all group shadow-card"
+            >
+              <span className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-[#EE6C4D]" />
+                <span>Take Skill Gap Test</span>
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#738598] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+
+            <Link
+              to="/roles"
+              className="px-4 py-3 rounded-full border border-[#DFE6ED] hover:border-[#0084E2] bg-white hover:bg-[#EAF3FA] text-[#1A2D42] text-xs font-semibold flex items-center justify-between transition-all group shadow-card"
+            >
+              <span className="flex items-center gap-2">
+                <BarChart2 className="w-4 h-4 text-[#18B29C]" />
+                <span>Explore Role Demand</span>
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#738598] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+
+            <Link
+              to="/roadmap"
+              className="px-4 py-3 rounded-full border border-[#DFE6ED] hover:border-[#0084E2] bg-white hover:bg-[#EAF3FA] text-[#1A2D42] text-xs font-semibold flex items-center justify-between transition-all group shadow-card"
+            >
+              <span className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-[#0084E2]" />
+                <span>Open Milestone Roadmap</span>
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#738598] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+
+            <Link
+              to="/about"
+              className="px-4 py-3 rounded-full border border-[#DFE6ED] hover:border-[#0084E2] bg-white hover:bg-[#EAF3FA] text-[#1A2D42] text-xs font-semibold flex items-center justify-between transition-all group shadow-card"
+            >
+              <span className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#0E73B9]" />
+                <span>Inspect Data Methodology</span>
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#738598] group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: SKILL PROFICIENCY TRACKER & STUDENT BADGES */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          {/* SKILL PROFICIENCY BARS */}
+          <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-[#EAF3FA] text-[#0E73B9] flex items-center justify-center font-bold">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-bold text-[#1A2D42] font-heading">Skill Proficiency Levels</h3>
+              </div>
+              <span className="text-xs font-semibold text-[#738598]">4 Tracked Skills</span>
+            </div>
+
+            <div className="space-y-4 pt-1">
+              {sampleSkillProgress.map((skill) => (
+                <div key={skill.name} className="space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-[#1A2D42]">{skill.name}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">
+                        {skill.level}
+                      </span>
+                      <span className="font-extrabold text-[#1A2D42] font-mono text-xs">{skill.percentage}%</span>
+                    </div>
+                  </div>
+                  <div className="w-full h-2.5 rounded-full bg-[#EAF3FA] overflow-hidden border border-[#DFE6ED]">
+                    <div
+                      className="h-full bg-[#0E73B9] rounded-full transition-all duration-500"
+                      style={{ width: `${skill.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* STUDENT BADGES & ACHIEVEMENTS */}
+          <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-[#EAF3FA] text-[#EE6C4D] flex items-center justify-center font-bold">
+                  <Award className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-bold text-[#1A2D42] font-heading">Student Achievements</h3>
+              </div>
+              <span className="text-xs font-semibold text-[#738598]">4 Badges Unlocked</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              {achievements.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="p-3.5 rounded-xl bg-[#F4F7FA] border border-[#DFE6ED] flex items-center gap-3 hover:border-[#0084E2] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border border-[#DFE6ED] bg-[#EAF3FA] text-[#0E73B9]">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-[#1A2D42]">{item.title}</h4>
+                      <p className="text-[11px] text-[#738598]">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 4: CANONICAL CAREER ROLES CATALOG */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-slate-800 pb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#DFE6ED] pb-4">
           <div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">Canonical Career Roles Catalog</h2>
-            <p className="text-xs text-slate-400 mt-1">Select a role to inspect employer skill frequencies, demand score rankings, and trends.</p>
+            <h2 className="text-xl font-bold text-[#1A2D42] tracking-tight font-heading">Canonical Career Roles Catalog</h2>
+            <p className="text-xs text-[#738598] mt-1">Select a role to inspect employer skill frequencies, demand score rankings, and market trends.</p>
           </div>
-          <Link to="/roles" className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+          <Link to="/roles" className="text-xs font-bold text-[#0E73B9] hover:text-[#0084E2] flex items-center gap-1">
             <span>View All 20 Roles</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-slate-400 text-xs">Loading career roles database...</div>
+          <div className="text-center py-12 text-[#738598] text-xs">Loading career roles database...</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {roles.slice(0, 9).map((role) => (
               <div
                 key={role.normalized_key}
                 onClick={() => navigate(`/role/${role.normalized_key}`)}
-                className="prof-card rounded-xl p-5 cursor-pointer space-y-4 group"
+                className="prof-card rounded-2xl p-5 cursor-pointer space-y-4 group bg-white border border-[#DFE6ED] hover:border-[#0084E2] shadow-card transition-all"
               >
                 
                 <div className="flex items-start justify-between">
-                  <div className="w-10 h-10 rounded-lg bg-blue-600/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-[#EAF3FA] border border-[#DFE6ED] text-[#0E73B9] flex items-center justify-center">
                     <Layers className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-semibold px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-800">
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">
                     {role.job_count} Jobs
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-base font-bold text-[#1A2D42] group-hover:text-[#0084E2] transition-colors font-heading">
                     {role.name}
                   </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">Employer demand analytics dashboard</p>
+                  <p className="text-xs text-[#738598] mt-0.5">Employer demand analytics dashboard</p>
                 </div>
 
-                <div className="space-y-1.5 pt-2 border-t border-slate-800">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Top Demanded Skills</span>
+                <div className="space-y-1.5 pt-2 border-t border-[#DFE6ED]">
+                  <span className="text-[10px] font-bold text-[#738598] uppercase tracking-wider">Top Demanded Skills</span>
                   <div className="flex flex-wrap gap-1.5">
                     {role.top_skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-900 text-slate-300 border border-slate-800"
+                        className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#EAF3FA] text-[#1A2D42] border border-[#DFE6ED]"
                       >
                         {skill}
                       </span>
@@ -215,52 +388,8 @@ export const HomePage: React.FC = () => {
 
       </section>
 
-      {/* CORE PIPELINE HIGHLIGHT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="prof-panel rounded-2xl p-8 border border-slate-800 space-y-8">
-          
-          <div className="text-center max-w-xl mx-auto space-y-2">
-            <h2 className="text-2xl font-bold text-white">How CareerSkill AI Works</h2>
-            <p className="text-xs text-slate-400">Data science & NLP pipeline translating thousands of raw job postings into actionable career execution paths.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div className="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2.5">
-              <div className="w-9 h-9 rounded-lg bg-blue-600/15 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-sm">
-                1
-              </div>
-              <h3 className="text-sm font-bold text-white">1. NLP Skill Extraction</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Raw job listings pass through our controlled taxonomy parser to isolate exact technical skill tokens while avoiding string corruption.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2.5">
-              <div className="w-9 h-9 rounded-lg bg-indigo-600/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-sm">
-                2
-              </div>
-              <h3 className="text-sm font-bold text-white">2. Skill Gap Analysis</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Compare your technical skills against market requirements to receive your Estimated Market Skill Alignment %.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2.5">
-              <div className="w-9 h-9 rounded-lg bg-emerald-600/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-sm">
-                3
-              </div>
-              <h3 className="text-sm font-bold text-white">3. Learning Roadmap</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Generate a stage-by-stage learning path with practical portfolio project blueprints tailored specifically to your target role.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
     </div>
   );
 };
+
+export default HomePage;

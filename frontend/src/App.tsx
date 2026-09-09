@@ -13,7 +13,7 @@ import { AboutPage } from './pages/AboutPage';
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-[#0b0f19] text-slate-100 selection:bg-blue-500 selection:text-white">
+      <div className="min-h-screen flex flex-col bg-[#F4F7FA] text-[#1A2D42] selection:bg-[#0E73B9] selection:text-white">
         <Navbar />
         <main className="flex-grow">
           <Routes>

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import { Map, Download, CheckCircle, ArrowRight, Layers, Award, Sparkles, BookOpen, GraduationCap, ExternalLink } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { 
+  Map, Download, CheckCircle2, Trophy, Activity, Check, ChevronRight
+} from 'lucide-react';
 import { fetchRoles, fetchRoadmap } from '../services/api';
-import { RoleSummary, RoadmapResponse, RoadmapStage, LearningResource } from '../types';
+import { RoleSummary, RoadmapResponse } from '../types';
 
 export const RoadmapPage: React.FC = () => {
   const [searchParams] = useSearchParams();
 
-  const initialRole = searchParams.get('role') || 'ai-engineer';
+  const initialRole = searchParams.get('role') || 'data-scientist';
   const initialSkillsParam = searchParams.get('skills');
   const userSkills = initialSkillsParam
     ? initialSkillsParam.split(',').filter(Boolean)
@@ -42,21 +44,23 @@ export const RoadmapPage: React.FC = () => {
     a.click();
   };
 
+  const currentRoleName = roles.find((r) => r.normalized_key === targetRole)?.name || targetRole;
+
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
       {/* Header Banner */}
-      <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-[#DFE6ED] bg-white shadow-card flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/20">
-            <Map className="w-3.5 h-3.5" /> Stage-by-Stage Learning Roadmap
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20">
+            <Map className="w-3.5 h-3.5" /> Dynamic Role Roadmap Engine
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Career Execution Blueprint
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A2D42] font-heading">
+            Personalized Career Execution Roadmap
           </h1>
-          <p className="text-xs text-slate-400">
-            Custom learning sequence structured according to skill dependencies and prerequisite chains.
+          <p className="text-xs text-[#738598]">
+            Tailored learning path specifically generated for <strong className="text-[#1A2D42]">{currentRoleName}</strong> based on empirical job postings and your skill profile.
           </p>
         </div>
 
@@ -65,10 +69,10 @@ export const RoadmapPage: React.FC = () => {
           <select
             value={targetRole}
             onChange={(e) => setTargetRole(e.target.value)}
-            className="px-3.5 py-2.5 prof-input rounded-xl text-white text-xs font-semibold focus:outline-none"
+            className="px-4 py-2.5 prof-input rounded-full text-[#1A2D42] text-xs font-semibold focus:outline-none bg-white border border-[#DFE6ED]"
           >
             {roles.map((r) => (
-              <option key={r.normalized_key} value={r.normalized_key} className="bg-slate-900 text-white">
+              <option key={r.normalized_key} value={r.normalized_key} className="bg-white text-[#1A2D42]">
                 {r.name}
               </option>
             ))}
@@ -76,140 +80,147 @@ export const RoadmapPage: React.FC = () => {
 
           <button
             onClick={handleDownloadJSON}
-            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-bold flex items-center gap-2 shrink-0 transition-colors"
+            className="px-4 py-2.5 bg-white hover:bg-[#EAF3FA] text-[#1A2D42] border border-[#DFE6ED] rounded-full text-xs font-bold flex items-center gap-2 shrink-0 transition-colors shadow-card"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-[#738598]" />
             <span className="hidden sm:inline">Export JSON</span>
           </button>
         </div>
 
       </div>
 
-      {loading || !roadmapData ? (
-        <div className="prof-panel rounded-2xl p-16 text-center text-slate-400 text-xs font-medium">
-          Generating roadmap timeline graph...
-        </div>
-      ) : (
-        <div className="space-y-8">
-          
-          {/* OVERVIEW STATS */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="prof-card rounded-xl p-4 text-center space-y-1">
-              <span className="text-2xl font-extrabold text-blue-400">{roadmapData.total_stages}</span>
-              <span className="text-xs font-bold text-slate-400 block">Total Learning Stages</span>
-            </div>
-            <div className="prof-card rounded-xl p-4 text-center space-y-1">
-              <span className="text-2xl font-extrabold text-emerald-400">{roadmapData.completed_stages}</span>
-              <span className="text-xs font-bold text-slate-400 block">Skills Completed</span>
-            </div>
-            <div className="prof-card rounded-xl p-4 text-center space-y-1">
-              <span className="text-2xl font-extrabold text-indigo-400">{roadmapData.target_role}</span>
-              <span className="text-xs font-bold text-slate-400 block">Target Role</span>
-            </div>
+      {/* DYNAMIC STAGE-BY-STAGE ROADMAP */}
+      <section className="prof-panel p-6 sm:p-8 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#DFE6ED] pb-4">
+          <div>
+            <h2 className="text-lg font-bold text-[#1A2D42] font-heading">
+              {currentRoleName} Learning Sequence
+            </h2>
+            <p className="text-xs text-[#738598] mt-0.5">
+              Targeted skill acquisition pipeline ordered by prerequisite dependencies and market demand frequency.
+            </p>
           </div>
 
-          {/* TIMELINE STAGES */}
-          <div className="space-y-6 relative before:absolute before:inset-0 before:left-6 sm:before:left-8 before:w-0.5 before:bg-slate-800">
-            {roadmapData.stages.map((stage: RoadmapStage) => {
+          {roadmapData && (
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-1.5 text-xs text-[#18B29C] font-bold bg-[#18B29C]/10 px-3.5 py-1.5 rounded-full border border-[#18B29C]/20">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{roadmapData.completed_stages} of {roadmapData.total_stages} Skills Verified</span>
+              </span>
+            </div>
+          )}
+        </div>
+
+        {loading || !roadmapData ? (
+          <div className="py-16 text-center text-[#738598] text-xs font-medium">
+            Generating customized roadmap sequence for {currentRoleName}...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-2">
+            {roadmapData.stages.map((stage) => {
               const isCompleted = stage.status === 'Already Completed';
+              const isHighPriority = stage.priority === 'High Priority';
+              const isMediumPriority = stage.priority === 'Medium Priority';
 
               return (
-                <div key={stage.stage} className="relative pl-12 sm:pl-16 space-y-3">
-                  
-                  {/* Timeline Node Icon */}
-                  <div className={`absolute left-0 top-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs shadow-md border ${
+                <div
+                  key={stage.skill}
+                  className={`p-4 rounded-2xl border transition-all ${
                     isCompleted
-                      ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                      : 'bg-blue-600 text-white border-blue-500'
-                  }`}>
-                    {isCompleted ? '✓' : stage.stage}
+                      ? 'border-[#18B29C]/40 bg-[#18B29C]/10 text-[#1A2D42]'
+                      : isHighPriority
+                      ? 'border-[#EE6C4D]/40 bg-[#EE6C4D]/10 text-[#1A2D42]'
+                      : isMediumPriority
+                      ? 'border-[#0084E2]/30 bg-[#EAF3FA] text-[#1A2D42]'
+                      : 'border-[#DFE6ED] bg-white text-[#1A2D42]'
+                  } shadow-card hover:shadow-card-hover flex flex-col justify-between relative group space-y-3`}
+                >
+                  <div className="flex items-center justify-between text-[11px] font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#DFE6ED] text-[#0E73B9] font-mono text-[10px] shadow-xs">
+                      Stage {stage.stage}
+                    </span>
+                    {isCompleted ? (
+                      <span className="flex items-center gap-1 text-[#18B29C] font-bold text-[10px]">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" /> Covered
+                      </span>
+                    ) : isHighPriority ? (
+                      <span className="flex items-center gap-1 text-[#EE6C4D] font-bold text-[10px]">
+                        High Priority
+                      </span>
+                    ) : (
+                      <span className="text-[#0084E2] font-semibold text-[10px]">
+                        {stage.priority}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Stage Card */}
-                  <div className="prof-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-                    
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-                      <div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                          Stage {stage.stage} • {stage.category}
-                        </span>
-                        <h3 className="text-lg font-bold text-white mt-0.5">{stage.skill}</h3>
-                      </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-[#1A2D42] font-heading group-hover:text-[#0E73B9] transition-colors">
+                      {stage.skill}
+                    </h4>
+                    <p className="text-[11px] text-[#738598] mt-0.5 font-medium">
+                      Category: {stage.category}
+                    </p>
+                  </div>
 
-                      <div className="flex items-center gap-2">
-                        <span className={`px-2.5 py-1 rounded text-xs font-bold border ${
-                          stage.priority === 'High Priority'
-                            ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                            : stage.priority === 'Medium Priority'
-                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                            : 'bg-slate-800 text-slate-400 border-slate-700'
-                        }`}>
-                          {stage.priority}
-                        </span>
+                  {stage.project_recommendation && (
+                    <div className="p-2.5 rounded-xl bg-white/80 border border-[#DFE6ED] space-y-0.5 text-[11px]">
+                      <span className="font-bold text-[#0E73B9] text-[10px] block uppercase tracking-wider">Recommended Project:</span>
+                      <p className="text-[#1A2D42] leading-snug font-medium">{stage.project_recommendation}</p>
+                    </div>
+                  )}
 
-                        <span className={`px-2.5 py-1 rounded text-xs font-bold border ${
-                          isCompleted
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                        }`}>
-                          {stage.status}
-                        </span>
+                  {stage.learning_resources && stage.learning_resources.length > 0 && (
+                    <div className="pt-2 border-t border-[#DFE6ED] space-y-1">
+                      <span className="text-[10px] font-bold text-[#738598] uppercase tracking-wider block">Learning Resources:</span>
+                      <div className="flex flex-wrap gap-1">
+                        {stage.learning_resources.slice(0, 2).map((res) => (
+                          <a
+                            key={res.title}
+                            href={res.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EAF3FA] text-[#0E73B9] hover:bg-[#0E73B9] hover:text-white transition-colors border border-[#DFE6ED]"
+                          >
+                            <span>{res.platform}</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </a>
+                        ))}
                       </div>
                     </div>
-
-                    {/* Project Recommendation Blueprint */}
-                    {stage.project_recommendation && (
-                      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 text-xs">
-                        <div className="flex items-center gap-2 font-bold text-blue-400">
-                          <BookOpen className="w-4 h-4" /> Recommended Project Blueprint
-                        </div>
-                        <p className="text-slate-300 font-semibold">{stage.project_recommendation}</p>
-                      </div>
-                    )}
-
-                    {/* Learning Platform Resources (Coursera, Udemy, edX, Docs) */}
-                    {stage.learning_resources && stage.learning_resources.length > 0 && (
-                      <div className="space-y-2 pt-1">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400">
-                          <GraduationCap className="w-4 h-4" /> Top Curated Courses & Learning Resources
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {stage.learning_resources.map((res: LearningResource, idx: number) => (
-                            <a
-                              key={idx}
-                              href={res.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/40 transition-all flex items-start justify-between gap-2 group"
-                            >
-                              <div className="space-y-1 overflow-hidden">
-                                <div className="flex items-center gap-2">
-                                  <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 text-[10px] font-bold border border-indigo-500/20 shrink-0">
-                                    {res.platform}
-                                  </span>
-                                  <span className="text-[10px] text-slate-400 font-medium truncate">{res.type}</span>
-                                </div>
-                                <p className="text-xs text-slate-200 font-medium line-clamp-1 group-hover:text-indigo-300 transition-colors">
-                                  {res.title}
-                                </p>
-                              </div>
-                              <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 shrink-0 mt-1 transition-colors" />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                  </div>
-
+                  )}
                 </div>
               );
             })}
-          </div>
 
-        </div>
-      )}
+            {/* SUCCESS TROPHY TARGET STEP */}
+            <div className="p-4 rounded-2xl border border-[#EE6C4D]/40 bg-[#EE6C4D]/10 text-[#1A2D42] shadow-card flex flex-col justify-between space-y-3">
+              <div className="flex items-center justify-between text-[11px] font-bold">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#EE6C4D] text-white font-extrabold uppercase text-[9px] tracking-wider">
+                  SUCCESS
+                </span>
+                <Trophy className="w-5 h-5 text-[#EE6C4D]" />
+              </div>
+              <div>
+                <h4 className="text-sm font-extrabold text-[#1A2D42] font-heading">
+                  {currentRoleName} Market Readiness
+                </h4>
+                <p className="text-[11px] text-[#738598] mt-1 leading-snug">
+                  Verified Skill Portfolio & Target Alignment
+                </p>
+              </div>
+              <div className="pt-3 border-t border-[#EE6C4D]/30 flex items-center justify-between text-[10px] text-[#EE6C4D] font-bold">
+                <span>Career Target Unlocked</span>
+                <CheckCircle2 className="w-4 h-4 text-[#EE6C4D]" />
+              </div>
+            </div>
+
+          </div>
+        )}
+      </section>
 
     </div>
   );
 };
+
+export default RoadmapPage;

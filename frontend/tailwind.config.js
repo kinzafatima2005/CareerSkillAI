@@ -7,24 +7,30 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Manrope', 'sans-serif'],
-        manrope: ['Manrope', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        heading: ['Plus Jakarta Sans', 'sans-serif'],
       },
       colors: {
         brand: {
-          50: '#f0f6ff',
-          100: '#e0edff',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          900: '#1e3a8a',
+          primary: '#0E73B9',
+          accent: '#0084E2',
+          warm: '#EE6C4D',
+          teal: '#18B29C',
         },
-        dark: {
-          bg: '#0b0f19',
-          card: '#111827',
-          border: '#1f2937',
-          muted: '#9ca3af'
+        surface: {
+          bg: '#F4F7FA',
+          card: '#FFFFFF',
+          tint: '#EAF3FA',
+          border: '#DFE6ED',
+        },
+        text: {
+          primary: '#1A2D42',
+          muted: '#738598',
         }
+      },
+      boxShadow: {
+        card: '0 4px 12px rgba(26, 45, 66, 0.04)',
+        'card-hover': '0 8px 24px rgba(26, 45, 66, 0.08)',
       }
     },
   },
