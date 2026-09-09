@@ -23,6 +23,14 @@ export const HomePage: React.FC = () => {
     fetchRoles()
       .then(setRoles)
       .finally(() => setLoading(false));
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const filteredRoles = searchRole.trim()
@@ -71,7 +79,7 @@ export const HomePage: React.FC = () => {
       {/* SECTION 1: HERO BLUE BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* WELCOME HERO BLUE BANNER */}
-        <div className="w-full rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20 overflow-hidden">
+        <div className="w-full rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20">
 
           {/* Background Graphic Accents */}
           <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
@@ -122,8 +130,12 @@ export const HomePage: React.FC = () => {
                 {filteredRoles.map((role) => (
                   <button
                     key={role.normalized_key}
-                    onClick={() => handleSelectRole(role.normalized_key)}
-                    className="w-full px-3 py-2 rounded-xl hover:bg-[#EAF3FA] text-[#1A2D42] hover:text-[#0E73B9] flex items-center justify-between text-xs font-semibold transition-colors"
+                    type="button"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      handleSelectRole(role.normalized_key);
+                    }}
+                    className="w-full px-3 py-2 rounded-xl hover:bg-[#EAF3FA] text-[#1A2D42] hover:text-[#0E73B9] flex items-center justify-between text-xs font-semibold transition-colors cursor-pointer"
                   >
                     <span>{role.name}</span>
                     <span className="text-[11px] text-[#738598] font-mono">{role.job_count} jobs</span>
