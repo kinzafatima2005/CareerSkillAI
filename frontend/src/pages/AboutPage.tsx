@@ -7,9 +7,6 @@ export const AboutPage: React.FC = () => {
       
       {/* Header Banner */}
       <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-[#DFE6ED] bg-white shadow-card space-y-2">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20">
-          <Info className="w-3.5 h-3.5" /> Methodology & Data Quality Specifications
-        </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A2D42] font-heading">How CareerSkill AI Operates</h1>
         <p className="text-xs sm:text-sm text-[#738598] max-w-2xl leading-relaxed">
           Documentation of our dataset cleaning pipelines, natural language skill extraction, canonical title normalization, and demand score algorithms.

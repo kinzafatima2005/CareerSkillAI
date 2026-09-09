@@ -81,11 +81,6 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="space-y-4 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-xs font-semibold text-white backdrop-blur-xs">
-                <GraduationCap className="w-4 h-4" />
-                <span>Student Career Readiness Hub</span>
-              </div>
-
               <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight text-white">
                 Welcome Back, Career Explorer
               </h1>
@@ -337,7 +332,7 @@ export const HomePage: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#DFE6ED] pb-4">
           <div>
-            <h2 className="text-xl font-bold text-[#1A2D42] tracking-tight font-heading">Canonical Career Roles Catalog</h2>
+            <h2 className="text-xl font-bold text-[#1A2D42] tracking-tight font-heading">Career Roles Catalog</h2>
             <p className="text-xs text-[#738598] mt-1">Select a role to inspect employer skill frequencies, demand score rankings, and market trends.</p>
           </div>
           <Link to="/roles" className="text-xs font-bold text-[#0E73B9] hover:text-[#0084E2] flex items-center gap-1">

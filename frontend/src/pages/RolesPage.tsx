@@ -49,13 +49,13 @@ export const RolesPage: React.FC = () => {
       {/* Header Banner */}
       <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-[#DFE6ED] bg-white shadow-card space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20">
-          <BarChart2 className="w-3.5 h-3.5" /> Canonical Career Roles Directory ({roles.length} Roles)
+          <BarChart2 className="w-3.5 h-3.5" /> Career Roles Directory ({roles.length} Roles)
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A2D42] font-heading">
           Explore Job Market Skill Demand
         </h1>
         <p className="text-xs sm:text-sm text-[#738598] max-w-2xl leading-relaxed">
-          Select any canonical role below to inspect empirical employer skill frequency, demand score rankings (0-100), time-series growth trajectories, and salary insights.
+          Select any role below to inspect empirical employer skill frequency, demand score rankings (0-100), time-series growth trajectories, and salary insights.
         </p>
       </div>
 

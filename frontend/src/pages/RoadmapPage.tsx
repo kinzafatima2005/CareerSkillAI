@@ -85,10 +85,6 @@ export const RoadmapPage: React.FC = () => {
         <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-[#0E73B9]/10 via-[#0084E2]/5 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
 
         <div className="space-y-2 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20 shadow-xs">
-            <Map className="w-3.5 h-3.5 animate-pulse text-[#0084E2]" />
-            <span>Dynamic Dynamic Role Roadmap Engine</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A2D42] font-heading tracking-tight">
             Personalized Career Execution Roadmap
           </h1>
