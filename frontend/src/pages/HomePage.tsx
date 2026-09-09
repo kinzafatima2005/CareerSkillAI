@@ -68,169 +68,123 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-8 pb-16 pt-6">
 
-      {/* SECTION 1: HERO BLUE BANNER */}
+      {/* SECTION 1: HERO BLUE BANNER & PROFILE TRACKER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* WELCOME HERO BLUE BANNER */}
-        <div className="w-full rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          {/* Background Graphic Accents */}
-          <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-            <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12" />
-          </div>
+          {/* WELCOME HERO BLUE BANNER */}
+          <div className="lg:col-span-2 rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20">
 
-          <div className="space-y-4 relative z-10">
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight text-white">
-              Welcome Back, Career Explorer
-            </h1>
-            <p className="text-xs sm:text-sm text-white/90 max-w-2xl leading-relaxed font-medium">
-              Explore job market skill demand, evaluate your empirical skill gap, and build your role execution roadmap.
-            </p>
-          </div>
+            {/* Background Graphic Accents */}
+            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12" />
+            </div>
 
-          {/* Role Search Bar inside Hero */}
-          <div className="pt-6 relative z-10 max-w-xl" ref={dropdownRef}>
-            <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#738598]" />
-                <input
-                  type="text"
-                  placeholder="Search target role (e.g. AI Engineer, Software Engineer, DevOps)..."
-                  value={searchRole}
-                  onChange={(e) => {
-                    setSearchRole(e.target.value);
-                    setShowDropdown(true);
-                  }}
-                  onFocus={() => setShowDropdown(true)}
-                  className="w-full pl-10 pr-4 py-3 bg-white rounded-full text-[#1A2D42] placeholder-[#738598] text-xs font-medium focus:outline-none shadow-card border border-[#DFE6ED]"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-3 bg-[#0084E2] hover:bg-[#0E73B9] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 shrink-0 shadow-card transition-colors"
-              >
-                <span>Analyze Role</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
+            <div className="space-y-4 relative z-10">
+              <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight text-white">
+                Welcome Back, Career Explorer
+              </h1>
 
-            {/* Autocomplete Dropdown */}
-            {showDropdown && filteredRoles.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white rounded-2xl border border-[#DFE6ED] p-2 shadow-2xl z-50 max-h-60 overflow-y-auto text-[#1A2D42]">
-                <div className="px-3 py-1 text-[10px] font-bold text-[#738598] uppercase tracking-wider border-b border-[#DFE6ED]">
-                  Target Role Matches ({filteredRoles.length})
+
+            </div>
+
+            {/* Role Search Bar inside Hero */}
+            <div className="pt-6 relative z-10 max-w-xl" ref={dropdownRef}>
+              <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#738598]" />
+                  <input
+                    type="text"
+                    placeholder="Search target role (e.g. AI Engineer, Data Scientist, MLOps)..."
+                    value={searchRole}
+                    onChange={(e) => {
+                      setSearchRole(e.target.value);
+                      setShowDropdown(true);
+                    }}
+                    onFocus={() => setShowDropdown(true)}
+                    className="w-full pl-10 pr-4 py-3 bg-white rounded-full text-[#1A2D42] placeholder-[#738598] text-xs font-medium focus:outline-none shadow-card border border-[#DFE6ED]"
+                  />
                 </div>
-                {filteredRoles.map((role) => (
-                  <button
-                    key={role.normalized_key}
-                    onClick={() => handleSelectRole(role.normalized_key)}
-                    className="w-full px-3 py-2 rounded-xl hover:bg-[#EAF3FA] text-[#1A2D42] hover:text-[#0E73B9] flex items-center justify-between text-xs font-semibold transition-colors"
-                  >
-                    <span>{role.name}</span>
-                    <span className="text-[11px] text-[#738598] font-mono">{role.job_count} jobs</span>
-                  </button>
-                ))}
-              </div>
-            )}
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-[#0084E2] hover:bg-[#0E73B9] text-white rounded-full text-xs font-bold flex items-center justify-center gap-2 shrink-0 shadow-card transition-colors"
+                >
+                  <span>Analyze Role</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+
+              {/* Autocomplete Dropdown */}
+              {showDropdown && filteredRoles.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white rounded-2xl border border-[#DFE6ED] p-2 shadow-2xl z-50 max-h-60 overflow-y-auto text-[#1A2D42]">
+                  <div className="px-3 py-1 text-[10px] font-bold text-[#738598] uppercase tracking-wider border-b border-[#DFE6ED]">
+                    Target Role Matches ({filteredRoles.length})
+                  </div>
+                  {filteredRoles.map((role) => (
+                    <button
+                      key={role.normalized_key}
+                      onClick={() => handleSelectRole(role.normalized_key)}
+                      className="w-full px-3 py-2 rounded-xl hover:bg-[#EAF3FA] text-[#1A2D42] hover:text-[#0E73B9] flex items-center justify-between text-xs font-semibold transition-colors"
+                    >
+                      <span>{role.name}</span>
+                      <span className="text-[11px] text-[#738598] font-mono">{role.job_count} jobs</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
 
-        </div>
-      </section>
-
-      {/* SECTION 2: CAREER SNAPSHOT ("Where do I stand right now?") */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="prof-panel p-6 sm:p-8 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-6">
-          
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#DFE6ED] pb-4">
+          {/* PROFILE COMPLETION TRACKER CARD */}
+          <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card flex flex-col justify-between text-center space-y-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20 mb-2">
-                <Target className="w-3.5 h-3.5 text-[#0084E2]" />
-                <span>Where do I stand right now?</span>
+              <h3 className="text-xs font-bold text-[#738598] uppercase tracking-wider font-heading flex items-center justify-center gap-1.5">
+                <Activity className="w-4 h-4 text-[#EE6C4D]" />
+                <span>Profile Completion Tracker</span>
+              </h3>
+            </div>
+
+            {/* Circular Progress Ring */}
+            <div className="relative w-32 h-32 mx-auto flex items-center justify-center py-2">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  className="text-[#EAF3FA]"
+                  strokeWidth="3.8"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  className="text-[#0E73B9]"
+                  strokeDasharray="82, 100"
+                  strokeWidth="3.8"
+                  strokeLinecap="round"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+              <div className="absolute text-center">
+                <span className="text-3xl font-extrabold text-[#1A2D42] font-heading">82%</span>
+                <span className="block text-[10px] text-[#738598] font-semibold uppercase tracking-wider">Match</span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-[#1A2D42] font-heading tracking-tight">
-                CAREER SNAPSHOT
-              </h2>
-              <p className="text-xs text-[#738598] mt-1 font-medium">
-                Your career readiness at a glance
-              </p>
+            </div>
+
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#18B29C]/10 text-[#18B29C] border border-[#18B29C]/20">
+                <Check className="w-3.5 h-3.5" />
+                <span>High Market Alignment</span>
+              </span>
+              <p className="text-[11px] text-[#738598]">7 of 9 core skills verified</p>
             </div>
 
             <Link
               to="/skill-gap"
-              className="px-5 py-2.5 bg-[#0E73B9] hover:bg-[#0084E2] text-white rounded-full text-xs font-bold flex items-center gap-2 shadow-sm transition-all shrink-0"
+              className="w-full py-2.5 rounded-full bg-[#EAF3FA] hover:bg-[#DFE6ED] text-[#0E73B9] text-xs font-bold text-center block border border-[#DFE6ED] transition-colors"
             >
-              <Activity className="w-4 h-4 text-white" />
-              <span>Full Skill Gap Analysis</span>
+              Run Skill Gap Analysis
             </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* CARD 1: VERIFIED SKILLS SUMMARY */}
-            <div className="p-5 rounded-2xl border border-[#DFE6ED] bg-[#F4F7FA] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#738598] uppercase tracking-wider">Tracked Skills</span>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">
-                  {userSkills.length} Active
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {userSkills.length === 0 ? (
-                  <p className="text-xs text-[#738598]">No skills added yet.</p>
-                ) : (
-                  userSkills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-[#1A2D42] border border-[#DFE6ED] shadow-xs"
-                    >
-                      <Check className="w-3 h-3 text-[#18B29C]" />
-                      <span>{skill}</span>
-                    </span>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {/* CARD 2: ESTIMATED READINESS SCORE */}
-            <div className="p-5 rounded-2xl border border-[#DFE6ED] bg-[#F4F7FA] space-y-3 flex flex-col justify-between">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#738598] uppercase tracking-wider">Estimated Market Match</span>
-                <span className="text-xl font-extrabold text-[#1A2D42] font-heading font-mono">
-                  {Math.min(95, Math.max(35, userSkills.length * 16))}%
-                </span>
-              </div>
-              <div className="w-full bg-[#DFE6ED] rounded-full h-2.5 overflow-hidden">
-                <div
-                  className="bg-gradient-to-r from-[#0E73B9] to-[#18B29C] h-full rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min(95, Math.max(35, userSkills.length * 16))}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-[#738598]">
-                Based on your {userSkills.length} verified technical skills against job market demand.
-              </p>
-            </div>
-
-            {/* CARD 3: RECOMMENDED NEXT STEP */}
-            <div className="p-5 rounded-2xl border border-[#18B29C]/30 bg-[#18B29C]/5 space-y-3 flex flex-col justify-between">
-              <div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#18B29C]/15 text-[#18B29C] border border-[#18B29C]/30 uppercase tracking-wider">
-                  Recommended Action
-                </span>
-                <h4 className="text-sm font-extrabold text-[#1A2D42] font-heading mt-2">
-                  Inspect Skill Gaps for Target Roles
-                </h4>
-                <p className="text-[11px] text-[#738598] mt-1 leading-relaxed">
-                  Evaluate your current stack against employer requirements and build your execution roadmap.
-                </p>
-              </div>
-              <Link
-                to="/roadmap"
-                className="inline-flex items-center justify-between text-xs font-bold text-[#0E73B9] hover:text-[#0084E2] transition-colors pt-2 border-t border-[#18B29C]/20"
-              >
-                <span>View Career Execution Roadmap</span>
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-
           </div>
 
         </div>
