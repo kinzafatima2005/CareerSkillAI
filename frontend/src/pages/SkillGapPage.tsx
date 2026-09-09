@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CheckSquare, Plus, X, ArrowRight, Award, CheckCircle2, AlertCircle, Sparkles, Layers, Activity } from 'lucide-react';
 import { fetchAllSkills, fetchRoles, computeSkillGap } from '../services/api';
 import { SkillCategoryItem, RoleSummary, SkillGapResponse } from '../types';
+import { useUserSkills } from '../utils/userSkillsStorage';
 
 export const SkillGapPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +13,7 @@ export const SkillGapPage: React.FC = () => {
   const [targetRole, setTargetRole] = useState(initialRole);
   const [roles, setRoles] = useState<RoleSummary[]>([]);
   const [allSkills, setAllSkills] = useState<SkillCategoryItem[]>([]);
-  const [userSkills, setUserSkills] = useState<string[]>(['Python', 'SQL', 'Pandas', 'Docker']);
+  const [userSkills, setUserSkills] = useUserSkills();
   const [newSkillInput, setNewSkillInput] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 

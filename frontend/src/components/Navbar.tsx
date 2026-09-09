@@ -22,9 +22,6 @@ export const Navbar: React.FC = () => {
           
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#0E73B9] flex items-center justify-center text-white shadow-sm shadow-[#0E73B9]/20">
-              <Briefcase className="w-5 h-5" />
-            </div>
             <div>
               <span className="text-base font-extrabold tracking-tight text-[#1A2D42] flex items-center gap-2 font-heading">
                 CareerSkill <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">AI</span>
@@ -55,16 +52,8 @@ export const Navbar: React.FC = () => {
             })}
           </div>
 
-          {/* Action CTA */}
+          {/* Mobile Toggle */}
           <div className="flex items-center space-x-3">
-            <Link
-              to="/skill-gap"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#0E73B9] hover:bg-[#0084E2] rounded-full shadow-sm transition-all"
-            >
-              <Activity className="w-3.5 h-3.5 text-white" />
-              <span>Skill Gap Analysis</span>
-            </Link>
-
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-full bg-[#EAF3FA] text-[#1A2D42] hover:bg-[#DFE6ED] border border-[#DFE6ED]"

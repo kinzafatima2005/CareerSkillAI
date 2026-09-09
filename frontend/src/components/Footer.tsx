@@ -11,9 +11,6 @@ export const Footer: React.FC = () => {
           
           <div className="space-y-3 col-span-1 md:col-span-2">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#0E73B9] flex items-center justify-center text-white shadow-sm">
-                <Briefcase className="w-4 h-4" />
-              </div>
               <span className="text-sm font-extrabold text-[#1A2D42] tracking-tight font-heading">CareerSkill AI</span>
             </div>
             <p className="text-[#738598] max-w-md leading-relaxed text-xs">

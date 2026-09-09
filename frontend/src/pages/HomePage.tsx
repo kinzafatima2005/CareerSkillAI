@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Search, Briefcase, TrendingUp, CheckCircle2, Database, Award, ArrowRight, 
+import {
+  Search, Briefcase, TrendingUp, CheckCircle2, Database, Award, ArrowRight,
   Layers, Cpu, Target, BookOpen, Sparkles, ChevronRight, GraduationCap, Code2,
   Activity, Check, BarChart2, ShieldCheck, Compass
 } from 'lucide-react';
 import { fetchRoles } from '../services/api';
 import { RoleSummary } from '../types';
+import { useUserSkills } from '../utils/userSkillsStorage';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export const HomePage: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const [userSkills] = useUserSkills();
+
   useEffect(() => {
     fetchRoles()
       .then(setRoles)
@@ -24,10 +27,10 @@ export const HomePage: React.FC = () => {
 
   const filteredRoles = searchRole.trim()
     ? roles.filter(
-        (r) =>
-          r.name.toLowerCase().includes(searchRole.toLowerCase()) ||
-          r.normalized_key.includes(searchRole.toLowerCase().replace(/\s+/g, '-'))
-      )
+      (r) =>
+        r.name.toLowerCase().includes(searchRole.toLowerCase()) ||
+        r.normalized_key.includes(searchRole.toLowerCase().replace(/\s+/g, '-'))
+    )
     : roles;
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -47,36 +50,36 @@ export const HomePage: React.FC = () => {
     navigate(`/role/${slug}`);
   };
 
-  // Mock Student Skills & Progress Data
-  const sampleSkillProgress = [
-    { name: 'Python', percentage: 90, level: 'Advanced', color: 'bg-blue-600' },
-    { name: 'SQL & Databases', percentage: 75, level: 'Intermediate', color: 'bg-emerald-600' },
-    { name: 'Machine Learning', percentage: 60, level: 'Intermediate', color: 'bg-purple-600' },
-    { name: 'Deep Learning', percentage: 45, level: 'Beginner', color: 'bg-indigo-600' },
-  ];
+  // Dynamic Student Skills & Progress Data based on saved skills
+  const dynamicSkillProgress = userSkills.slice(0, 6).map((skill, index) => {
+    const percentages = [90, 80, 75, 65, 60, 55];
+    const percentage = percentages[index % percentages.length];
+    const level = percentage >= 80 ? 'Advanced' : percentage >= 65 ? 'Intermediate' : 'Beginner';
+    return { name: skill, percentage, level };
+  });
 
   const achievements = [
-    { title: 'SQL Explorer', desc: 'Queries & Schemas', icon: Database, color: 'text-emerald-700 bg-emerald-100 border-emerald-200' },
-    { title: 'Python Beginner', desc: 'Data Structures', icon: Code2, color: 'text-blue-700 bg-blue-100 border-blue-200' },
-    { title: 'ML Ready', desc: 'Model Evaluation', icon: Cpu, color: 'text-purple-700 bg-purple-100 border-purple-200' },
-    { title: 'Pipeline Architect', desc: 'ETL Pipelines', icon: Layers, color: 'text-indigo-700 bg-indigo-100 border-indigo-200' },
+    { title: 'Code Craftsman', desc: 'Core Programming & Logic', icon: Code2, color: 'text-blue-700 bg-blue-100 border-blue-200' },
+    { title: 'Database Explorer', desc: 'Queries & Data Management', icon: Database, color: 'text-emerald-700 bg-emerald-100 border-emerald-200' },
+    { title: 'System Architect', desc: 'Infrastructure & Tools', icon: Cpu, color: 'text-purple-700 bg-purple-100 border-purple-200' },
+    { title: 'Pipeline Engineer', desc: 'Workflows & Integration', icon: Layers, color: 'text-indigo-700 bg-indigo-100 border-indigo-200' },
   ];
 
   return (
     <div className="space-y-8 pb-16 pt-6">
-      
+
       {/* SECTION 1: HERO BLUE BANNER & PROFILE TRACKER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
+
           {/* WELCOME HERO BLUE BANNER */}
           <div className="lg:col-span-2 rounded-2xl bg-[#0E73B9] text-white p-8 sm:p-10 shadow-card flex flex-col justify-between relative z-20">
-            
+
             {/* Background Graphic Accents */}
             <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
               <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12" />
             </div>
-            
+
             <div className="space-y-4 relative z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-xs font-semibold text-white backdrop-blur-xs">
                 <GraduationCap className="w-4 h-4" />
@@ -87,9 +90,7 @@ export const HomePage: React.FC = () => {
                 Welcome Back, Career Explorer
               </h1>
 
-              <p className="text-sm text-white/90 max-w-xl leading-relaxed">
-                Your profile alignment is <strong className="text-white underline decoration-white/40">82% complete</strong> for target role <strong className="text-white">Data Scientist</strong>. Complete priority skills to unlock market readiness.
-              </p>
+
             </div>
 
             {/* Role Search Bar inside Hero */}
@@ -147,7 +148,6 @@ export const HomePage: React.FC = () => {
                 <Activity className="w-4 h-4 text-[#EE6C4D]" />
                 <span>Profile Completion Tracker</span>
               </h3>
-              <p className="text-xs text-[#738598] mt-0.5 font-medium">Target Role: Data Scientist</p>
             </div>
 
             {/* Circular Progress Ring */}
@@ -254,7 +254,7 @@ export const HomePage: React.FC = () => {
       {/* SECTION 3: SKILL PROFICIENCY TRACKER & STUDENT BADGES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
+
           {/* SKILL PROFICIENCY BARS */}
           <div className="prof-panel p-6 rounded-2xl border border-[#DFE6ED] bg-white shadow-card space-y-4">
             <div className="flex items-center justify-between">
@@ -264,29 +264,35 @@ export const HomePage: React.FC = () => {
                 </div>
                 <h3 className="text-sm font-bold text-[#1A2D42] font-heading">Skill Proficiency Levels</h3>
               </div>
-              <span className="text-xs font-semibold text-[#738598]">4 Tracked Skills</span>
+              <span className="text-xs font-semibold text-[#738598]">{userSkills.length} Tracked Skills</span>
             </div>
 
             <div className="space-y-4 pt-1">
-              {sampleSkillProgress.map((skill) => (
-                <div key={skill.name} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-[#1A2D42]">{skill.name}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">
-                        {skill.level}
-                      </span>
-                      <span className="font-extrabold text-[#1A2D42] font-mono text-xs">{skill.percentage}%</span>
+              {dynamicSkillProgress.length === 0 ? (
+                <div className="text-center py-6 text-xs text-[#738598]">
+                  No skills added yet. Add skills in the Skill Gap tab!
+                </div>
+              ) : (
+                dynamicSkillProgress.map((skill) => (
+                  <div key={skill.name} className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-[#1A2D42]">{skill.name}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EAF3FA] text-[#0E73B9] border border-[#DFE6ED]">
+                          {skill.level}
+                        </span>
+                        <span className="font-extrabold text-[#1A2D42] font-mono text-xs">{skill.percentage}%</span>
+                      </div>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[#EAF3FA] overflow-hidden border border-[#DFE6ED]">
+                      <div
+                        className="h-full bg-[#0E73B9] rounded-full transition-all duration-500"
+                        style={{ width: `${skill.percentage}%` }}
+                      />
                     </div>
                   </div>
-                  <div className="w-full h-2.5 rounded-full bg-[#EAF3FA] overflow-hidden border border-[#DFE6ED]">
-                    <div
-                      className="h-full bg-[#0E73B9] rounded-full transition-all duration-500"
-                      style={{ width: `${skill.percentage}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
 
@@ -328,7 +334,7 @@ export const HomePage: React.FC = () => {
 
       {/* SECTION 4: CANONICAL CAREER ROLES CATALOG */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        
+
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-[#DFE6ED] pb-4">
           <div>
             <h2 className="text-xl font-bold text-[#1A2D42] tracking-tight font-heading">Canonical Career Roles Catalog</h2>
@@ -350,7 +356,7 @@ export const HomePage: React.FC = () => {
                 onClick={() => navigate(`/role/${role.normalized_key}`)}
                 className="prof-card rounded-2xl p-5 cursor-pointer space-y-4 group bg-white border border-[#DFE6ED] hover:border-[#0084E2] shadow-card transition-all"
               >
-                
+
                 <div className="flex items-start justify-between">
                   <div className="w-10 h-10 rounded-xl bg-[#EAF3FA] border border-[#DFE6ED] text-[#0E73B9] flex items-center justify-center">
                     <Layers className="w-5 h-5" />
