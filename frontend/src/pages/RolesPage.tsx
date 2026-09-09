@@ -45,12 +45,9 @@ export const RolesPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-      
+
       {/* Header Banner */}
       <div className="prof-panel rounded-2xl p-6 sm:p-8 border border-[#DFE6ED] bg-white shadow-card space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EAF3FA] text-[#0E73B9] text-xs font-bold border border-[#0E73B9]/20">
-          <BarChart2 className="w-3.5 h-3.5" /> Career Roles Directory ({roles.length} Roles)
-        </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1A2D42] font-heading">
           Explore Job Market Skill Demand
         </h1>
@@ -61,18 +58,17 @@ export const RolesPage: React.FC = () => {
 
       {/* Filter Toolbar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        
+
         {/* Category Pill Filters */}
         <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-colors ${
-                activeCategory === cat
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-colors ${activeCategory === cat
                   ? 'bg-[#0E73B9] text-white shadow-sm'
                   : 'bg-white text-[#738598] hover:text-[#1A2D42] hover:bg-[#EAF3FA] border border-[#DFE6ED]'
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -103,7 +99,7 @@ export const RolesPage: React.FC = () => {
               onClick={() => navigate(`/role/${role.normalized_key}`)}
               className="prof-card rounded-2xl p-5 cursor-pointer space-y-4 group bg-white border border-[#DFE6ED] hover:border-[#0084E2] shadow-card transition-all"
             >
-              
+
               <div className="flex items-start justify-between">
                 <div className="w-10 h-10 rounded-xl bg-[#EAF3FA] border border-[#DFE6ED] text-[#0E73B9] flex items-center justify-center">
                   <Briefcase className="w-5 h-5" />
