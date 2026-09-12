@@ -1,16 +1,16 @@
-# CareerSkill AI 🚀
-### AI-Powered Job Market Skill Intelligence & Personalized Career Roadmap Platform
+ CareerSkill AI 
+ AI-Powered Job Market Skill Intelligence & Personalized Career Roadmap Platform
 
 **CareerSkill AI** is a portfolio-level, full-stack Data Science & AI web application that analyzes thousands of real-world job postings to quantify employer skill demand, perform skill-gap analysis, calculate market alignment, and generate personalized, stage-by-stage learning roadmaps.
 
 ---
 
-## 📌 Problem Statement
+ Problem Statement
 Job seekers and transitioning software engineers face significant uncertainty regarding which technical skills are genuinely demanded by employers versus transient industry buzzwords. Generic learning paths often recommend redundant or out-of-sequence skills. **CareerSkill AI** solves this by grounding skill recommendations directly in empirical job market data extracted from actual job postings.
 
 ---
 
-## ✨ Key Features
+ Key Features
 
 1. **Career Role Intelligence Search**:
    - Inspect job market demand across 9 canonical roles (*AI Engineer, Machine Learning Engineer, Data Scientist, Data Engineer, Data Analyst, Software Engineer, NLP Engineer, Computer Vision Engineer, Business Intelligence Analyst*).
@@ -27,7 +27,7 @@ Job seekers and transitioning software engineers face significant uncertainty re
 
 ---
 
-## 🏗️ System Architecture
+ System Architecture
 
 ```
                                   +-----------------------+
@@ -74,7 +74,7 @@ Job seekers and transitioning software engineers face significant uncertainty re
 
 ---
 
-## 📂 Repository Structure
+ Repository Structure
 
 ```
 skills recommendation/
@@ -131,7 +131,7 @@ skills recommendation/
 
 ---
 
-## ⚡ Local Setup & Execution Guide
+ Local Setup & Execution Guide
 
 ### Prerequisites
 - **Python**: 3.10+
@@ -183,7 +183,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing
+ Testing
 
 Run the full automated pytest suite covering all 5 pipeline phases:
 ```bash
@@ -196,7 +196,7 @@ Output:
 
 ---
 
-## 🌐 API Documentation Summary
+ API Documentation Summary
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -211,7 +211,7 @@ Output:
 
 ---
 
-## 🧠 What I Learned (Data Science & Software Engineering Concepts)
+ What I Learned (Data Science & Software Engineering Concepts)
 
 1. **Natural Language Processing & Controlled Taxonomies**:
    - Built phrase-matching skill extractors with word boundaries (`\b`), handling technical tokens like `C++`, `C#`, `.NET`, and `R` without string corruption.
@@ -226,7 +226,7 @@ Output:
 
 ---
 
-## 🔒 Security & Best Practices
+ Security & Best Practices
 - Environment variables configured via `.env.example`.
 - Parameterized database queries via SQLAlchemy ORM.
 - Input validation enforced with Pydantic.
@@ -234,6 +234,6 @@ Output:
 
 ---
 
-## ⚠️ Limitations & Future Improvements
+ Limitations & Future Improvements
 - **Current Limitations**: Sample data generator uses pre-defined templates; location analytics are focused on top tech hubs.
 - **Future Enhancements**: Add transformer embeddings (Sentence-BERT) for zero-shot skill extraction and semantic job matching.
